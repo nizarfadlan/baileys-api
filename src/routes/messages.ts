@@ -3,14 +3,12 @@ import { message } from "@/controllers";
 import requestValidator from "@/middlewares/request-validator";
 import sessionValidator from "@/middlewares/session-validator";
 import { query, body } from "express-validator";
-import apiKeyValidator from "@/middlewares/api-key-validator";
 
 const router = Router({ mergeParams: true });
 router.get(
 	"/",
 	query("cursor").isNumeric().optional(),
 	query("limit").isNumeric().optional(),
-	apiKeyValidator,
 	requestValidator,
 	message.list,
 );
