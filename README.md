@@ -56,6 +56,9 @@ HOST="localhost"
 # Listening Port
 PORT="3000"
 
+# API Key (for Authorization Header)
+API_KEY="" # Leave it empty if you don't want
+
 # Project Mode (development|production)
 NODE_ENV="development"
 
@@ -88,7 +91,7 @@ npm run start
 
 ## API Docs
 
-The API documentation is available online [here](https://documenter.getpostman.com/view/18988925/2s8Z73zWbg). You can also import the **Postman Collection File** `(postman_collection.json)` into your Postman App alternatively
+The API documentation import the **Postman Collection File** `(postman_collection.json)` into your Postman App alternatively
 
 ## Notes
 
