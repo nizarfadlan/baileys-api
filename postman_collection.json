@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "fb3349c5-de0e-40ec-b909-3922f4a95b7a",
 		"name": "Baileys API v1.1.0",
-		"description": "API documentation for [https://github.com/ookamiiixd/baileys-api](https://github.com/ookamiiixd/baileys-api)\n\nNote that all the `POST` routes expect a JSON body, so make sure to include the header",
+		"description": "API documentation for [https://github.com/nizarfadlan/baileys-api](https://github.com/nizarfadlan/baileys-api)\n\nNote that all the `POST` routes expect a JSON body, so make sure to include the header",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "14456337"
 	},
@@ -17,12 +17,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/sessions",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"sessions"
-							]
+							"host": ["{{BASE_URL}}"],
+							"path": ["sessions"]
 						},
 						"description": "Return list of all sessions and its status"
 					},
@@ -35,13 +31,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions"
-									]
+									"path": ["sessions"]
 								}
 							},
 							"status": "OK",
@@ -93,13 +85,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/sessions/:sessionId",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"sessions",
-								":sessionId"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": ["sessions", ":sessionId"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -119,14 +106,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions/:sessionId",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions",
-										":sessionId"
-									],
+									"path": ["sessions", ":sessionId"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -184,14 +166,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions/:sessionId",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions",
-										":sessionId"
-									],
+									"path": ["sessions", ":sessionId"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -250,14 +227,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/sessions/:sessionId/status",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"sessions",
-								":sessionId",
-								"status"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": ["sessions", ":sessionId", "status"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -277,15 +248,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions/:sessionId/status",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions",
-										":sessionId",
-										"status"
-									],
+									"path": ["sessions", ":sessionId", "status"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -342,14 +307,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/sessions/:sessionId/status",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"sessions",
-										":sessionId",
-										"status"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": ["sessions", ":sessionId", "status"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -417,13 +376,8 @@
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/sessions/add",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"sessions",
-								"add"
-							]
+							"host": ["{{BASE_URL}}"],
+							"path": ["sessions", "add"]
 						},
 						"description": "Create new a session. Expect an object with `sessionId` props. You can also pass additional [baileys socket options](https://github.com/adiwajshing/Baileys#configuring-the-connection) there. Keep in mind that you can only pass JSON-parsable options\n\nExample:\n\n``` json\n{\n  \"sessionId\": \"john\",\n  // Additional session options\n  \"readIncomingMessages\": true // Automatically read all incoming messages\n  // Additional Baileys socket options\n  \"syncFullHistory\": true // Emulate WA desktop app to receive more messages\n  // ...etc\n}\n\n```"
 					},
@@ -445,14 +399,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions/add",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions",
-										"add"
-									]
+									"path": ["sessions", "add"]
 								}
 							},
 							"status": "OK",
@@ -512,14 +461,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions/add",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions",
-										"add"
-									]
+									"path": ["sessions", "add"]
 								}
 							},
 							"status": "Bad Request",
@@ -571,14 +515,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/sessions/:sessionId/add-sse",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"sessions",
-								":sessionId",
-								"add-sse"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": ["sessions", ":sessionId", "add-sse"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -598,15 +536,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions/:sessionId/add-sse",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions",
-										":sessionId",
-										"add-sse"
-									],
+									"path": ["sessions", ":sessionId", "add-sse"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -661,13 +593,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/sessions/:sessionId",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"sessions",
-								":sessionId"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": ["sessions", ":sessionId"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -687,14 +614,9 @@
 								"url": {
 									"raw": "http://localhost:3000/sessions/:sessionId",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										"sessions",
-										":sessionId"
-									],
+									"path": ["sessions", ":sessionId"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -751,13 +673,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/sessions/:sessionId",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"sessions",
-										":sessionId"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": ["sessions", ":sessionId"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -821,13 +738,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/chats",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"chats"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "chats"],
 							"query": [
 								{
 									"key": "limit",
@@ -861,14 +773,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/chats",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"chats"
-									],
+									"path": [":sessionId", "chats"],
 									"query": [
 										{
 											"key": "limit",
@@ -939,13 +846,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/chats",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"chats"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "chats"],
 									"query": [
 										{
 											"key": "limit",
@@ -1018,14 +920,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/chats/:jid",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"chats",
-								":jid"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "chats", ":jid"],
 							"query": [
 								{
 									"key": "limit",
@@ -1064,15 +960,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/chats/:jid",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"chats",
-										":jid"
-									],
+									"path": [":sessionId", "chats", ":jid"],
 									"query": [
 										{
 											"key": "limit",
@@ -1148,14 +1038,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/chats/:jid",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"chats",
-										":jid"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "chats", ":jid"],
 									"query": [
 										{
 											"key": "limit",
@@ -1238,13 +1122,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/contacts",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"contacts"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "contacts"],
 							"query": [
 								{
 									"key": "limit",
@@ -1278,14 +1157,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/contacts",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"contacts"
-									],
+									"path": [":sessionId", "contacts"],
 									"query": [
 										{
 											"key": "limit",
@@ -1356,13 +1230,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/contacts",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"contacts"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "contacts"],
 									"query": [
 										{
 											"key": "limit",
@@ -1435,14 +1304,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/contacts/:jid",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"contacts",
-								":jid"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "contacts", ":jid"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -1467,15 +1330,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/contacts/:jid",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"contacts",
-										":jid"
-									],
+									"path": [":sessionId", "contacts", ":jid"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -1537,14 +1394,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/contacts/:jid",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"contacts",
-										":jid"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "contacts", ":jid"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -1608,15 +1459,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/contacts/:jid/photo",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"contacts",
-								":jid",
-								"photo"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "contacts", ":jid", "photo"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -1641,16 +1485,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/contacts/:jid/photo",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"contacts",
-										":jid",
-										"photo"
-									],
+									"path": [":sessionId", "contacts", ":jid", "photo"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -1712,15 +1549,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/contacts/:jid/photo",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"contacts",
-										":jid",
-										"photo"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "contacts", ":jid", "photo"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -1784,14 +1614,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/contacts/blocklist",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"contacts",
-								"blocklist"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "contacts", "blocklist"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -1811,15 +1635,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/contacts/blocklist",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"contacts",
-										"blocklist"
-									],
+									"path": [":sessionId", "contacts", "blocklist"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -1876,14 +1694,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/contacts/blocklist",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"contacts",
-										"blocklist"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "contacts", "blocklist"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -1951,15 +1763,8 @@
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/contacts/blocklist/update",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"contacts",
-								"blocklist",
-								"update"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "contacts", "blocklist", "update"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -1988,16 +1793,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/contacts/blocklist/update",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"contacts",
-										"blocklist",
-										"update"
-									],
+									"path": [":sessionId", "contacts", "blocklist", "update"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -2063,15 +1861,8 @@
 								},
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/contacts/blocklist/update",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"contacts",
-										"blocklist",
-										"update"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "contacts", "blocklist", "update"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -2135,13 +1926,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/groups",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"groups"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "groups"],
 							"query": [
 								{
 									"key": "limit",
@@ -2175,14 +1961,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/groups",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"groups"
-									],
+									"path": [":sessionId", "groups"],
 									"query": [
 										{
 											"key": "limit",
@@ -2253,13 +2034,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/groups",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"groups"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "groups"],
 									"query": [
 										{
 											"key": "limit",
@@ -2332,14 +2108,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/groups/:jid",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"groups",
-								":jid"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "groups", ":jid"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -2364,15 +2134,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/groups/:jid",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"groups",
-										":jid"
-									],
+									"path": [":sessionId", "groups", ":jid"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -2434,14 +2198,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/groups/:jid",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"groups",
-										":jid"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "groups", ":jid"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -2505,15 +2263,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/groups/:jid/photo",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"groups",
-								":jid",
-								"photo"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "groups", ":jid", "photo"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -2538,16 +2289,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/groups/:jid/photo",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"groups",
-										":jid",
-										"photo"
-									],
+									"path": [":sessionId", "groups", ":jid", "photo"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -2609,15 +2353,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/groups/:jid/photo",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"groups",
-										":jid",
-										"photo"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "groups", ":jid", "photo"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -2686,13 +2423,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/messages",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"messages"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "messages"],
 							"query": [
 								{
 									"key": "limit",
@@ -2726,14 +2458,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/messages",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"messages"
-									],
+									"path": [":sessionId", "messages"],
 									"query": [
 										{
 											"key": "limit",
@@ -2804,13 +2531,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/messages",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"messages"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "messages"],
 									"query": [
 										{
 											"key": "limit",
@@ -2892,14 +2614,8 @@
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/messages/send",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"messages",
-								"send"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "messages", "send"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -2928,15 +2644,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/messages/send",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"messages",
-										"send"
-									],
+									"path": [":sessionId", "messages", "send"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -3002,14 +2712,8 @@
 								},
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/messages/send",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"messages",
-										"send"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "messages", "send"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -3077,15 +2781,8 @@
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/messages/send/bulk",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"messages",
-								"send",
-								"bulk"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "messages", "send", "bulk"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -3114,16 +2811,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/messages/send/bulk",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"messages",
-										"send",
-										"bulk"
-									],
+									"path": [":sessionId", "messages", "send", "bulk"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -3189,15 +2879,8 @@
 								},
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/messages/send/bulk",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"messages",
-										"send",
-										"bulk"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "messages", "send", "bulk"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -3263,15 +2946,8 @@
 								},
 								"url": {
 									"raw": "{{BASE_URL}}/:sessionId/messages/send/bulk",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										":sessionId",
-										"messages",
-										"send",
-										"bulk"
-									],
+									"host": ["{{BASE_URL}}"],
+									"path": [":sessionId", "messages", "send", "bulk"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -3339,14 +3015,8 @@
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/:sessionId/messages/download",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								":sessionId",
-								"messages",
-								"download"
-							],
+							"host": ["{{BASE_URL}}"],
+							"path": [":sessionId", "messages", "download"],
 							"variable": [
 								{
 									"key": "sessionId",
@@ -3375,15 +3045,9 @@
 								"url": {
 									"raw": "http://localhost:3000/:sessionId/messages/download",
 									"protocol": "http",
-									"host": [
-										"localhost"
-									],
+									"host": ["localhost"],
 									"port": "3000",
-									"path": [
-										":sessionId",
-										"messages",
-										"download"
-									],
+									"path": [":sessionId", "messages", "download"],
 									"variable": [
 										{
 											"key": "sessionId",
@@ -3442,13 +3106,13 @@
 		"type": "apikey",
 		"apikey": [
 			{
-				"key": "value",
-				"value": "a6bc226axxxxxxxxxx",
+				"key": "key",
+				"value": "x-api-key",
 				"type": "string"
 			},
 			{
-				"key": "key",
-				"value": "api-key",
+				"key": "value",
+				"value": "a6bc226axxxxxxxxxx",
 				"type": "string"
 			}
 		]
@@ -3458,18 +3122,14 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		}
 	],

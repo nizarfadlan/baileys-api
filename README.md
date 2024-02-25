@@ -59,6 +59,9 @@ PORT="3000"
 # API Key (for Authorization Header)
 API_KEY="" # Leave it empty if you don't want
 
+# Name browser bot
+NAME_BOT_BROWSER="Whatsapp Bot"
+
 # Project Mode (development|production)
 NODE_ENV="development"
 

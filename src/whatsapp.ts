@@ -12,6 +12,9 @@ import type { Boom } from "@hapi/boom";
 import type { Response } from "express";
 import { toDataURL } from "qrcode";
 import { delay } from "./utils";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 type Session = WASocket & {
 	destroy: () => Promise<void>;
@@ -142,7 +145,7 @@ export async function createSession(options: createSessionOptions) {
 	const { state, saveCreds } = await useSession(sessionId);
 	const socket = makeWASocket({
 		printQRInTerminal: true,
-		browser: ["Refourma Bot", "Chrome", "3.0"],
+		browser: [process.env.NAME_BOT_BROWSER || "Whatsapp Bot", "Chrome", "3.0"],
 		generateHighQualityLinkPreview: true,
 		...socketConfig,
 		auth: {

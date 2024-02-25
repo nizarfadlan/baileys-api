@@ -1,11 +1,11 @@
 {
 	"name": "baileys-express",
-	"version": "1.0.0-beta.0",
+	"version": "1.1.0",
 	"description": "baileys ",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "tsc",
-		"start": "node .",
+		"build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src",
+		"start": "node -r tsconfig-paths/register -r ts-node ./dist/index.js",
 		"dev": "nodemon src/index.ts",
 		"lint": "eslint . --ext .ts",
 		"format": "prettier . --write",
@@ -45,6 +45,7 @@
 		"prisma": "^5.10.2",
 		"ts-node": "^10.9.2",
 		"tsconfig-paths": "^4.2.0",
+		"tscpaths": "^0.0.9",
 		"typescript": "^5.3.3"
 	},
 	"engines": {
