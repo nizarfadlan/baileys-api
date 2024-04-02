@@ -24,6 +24,7 @@ npm install
 4. Build the project using the `build` script
 
 ```sh
+npm run generate
 npm run build
 ```
 

@@ -6,6 +6,7 @@ import { logger } from "@/shared";
 import { delay as delayMs } from "@/utils";
 import { getSession, jidExists } from "@/whatsapp";
 import { prisma } from "@/db";
+import type { Message } from "@prisma/client";
 
 export const list: RequestHandler = async (req, res) => {
 	try {
@@ -18,7 +19,7 @@ export const list: RequestHandler = async (req, res) => {
 				skip: cursor ? 1 : 0,
 				where: { sessionId },
 			})
-		).map((m) => serializePrisma(m));
+		).map((m: Message) => serializePrisma(m));
 
 		res.status(200).json({
 			data: messages,
