@@ -25,7 +25,12 @@ npm install
 
 ```sh
 npm run generate
-npm run build
+
+# Build staging
+npm run build:staging
+
+# Build production
+npm run build:prod
 ```
 
 You can skip this part if you're using the prebuilt one from the release page
@@ -37,13 +42,14 @@ You can skip this part if you're using the prebuilt one from the release page
 1. Run your [migration](https://www.prisma.io/docs/reference/api-reference/command-reference#prisma-migrate)
 
 ```sh
-npx prisma migrate (dev|deploy)
-```
+# Run the migration in development mode
+npm run migrate:dev
 
-or push the schema
+# Run the migration in staging mode
+npm run migrate:staging
 
-```sh
-npx prisma db push
+# Run the migration in production mode
+npm run migrate:prod
 ```
 
 Don't forget to always re-run those whenever there's a change on the `prisma/schema.prisma` file
@@ -88,7 +94,14 @@ LOG_LEVEL="warn"
 1. You can then start the app using the `start` script
 
 ```sh
-npm run start
+# Start the app in development mode
+npm run dev
+
+# Start the app in staging mode
+npm run start:staging
+
+# Start the app in production mode
+npm run start:prod
 ```
 
 1. Now the endpoint should be available according to your environment variables configuration. Default is at `http://localhost:3000`
