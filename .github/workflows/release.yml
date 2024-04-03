@@ -56,6 +56,12 @@ jobs:
       - name: Check package version
         uses: technote-space/package-version-check-action@v1
 
+      - name: Make Package
+        run: npm pack
+
+      - name: Rename Pack
+        run: mv *.tgz baileys-api.tgz
+
       - name: Create Release
         uses: meeDamian/github-release@2.0
         env:
