@@ -20,7 +20,7 @@
 		"@whiskeysockets/baileys": "^6.6.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
-		"express": "^4.18.2",
+		"express": "^4.19.2",
 		"express-validator": "^7.0.1",
 		"link-preview-js": "^3.0.5",
 		"long": "^5.2.3",
