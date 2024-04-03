@@ -146,6 +146,8 @@ model Message {
   urlText                         Boolean?
   userReceipt                     Json?
   verifiedBizName                 String?  @db.VarChar(128)
+  eventResponses                  Json?
+  pinInChat                       Json?
 
   @@unique([sessionId, remoteJid, id], map: "unique_message_key_per_session_id")
   @@index([sessionId])
