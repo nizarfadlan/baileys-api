@@ -1,7 +1,7 @@
 {
-	"name": "baileys-express",
-	"version": "1.1.0",
-	"description": "baileys ",
+	"name": "baileys-api",
+	"version": "1.1.2",
+	"description": "Simple WhatsApp REST API with multiple device support",
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src",
@@ -9,7 +9,9 @@
 		"dev": "nodemon src/index.ts",
 		"lint": "eslint . --ext .ts",
 		"format": "prettier . --write",
-		"generate": "prisma generate"
+		"generate": "prisma generate",
+		"version": "npm run build && git add -A dist",
+		"postversion": "git push && git push --tags && rm -rf build/temp"
 	},
 	"keywords": [],
 	"author": "Nizar",
