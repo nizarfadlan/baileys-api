@@ -10,8 +10,8 @@
 		"lint": "eslint . --ext .ts",
 		"format": "prettier . --write",
 		"generate": "prisma generate",
-		"version": "npm run build && git add -A dist",
-		"postversion": "git push && git push --tags && rm -rf build/temp"
+		"changelog:preview": "conventional-changelog -p angular -u",
+		"changelog:last": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
 	},
 	"keywords": [],
 	"author": "Nizar",
@@ -39,6 +39,7 @@
 		"@types/ws": "^8.5.10",
 		"@typescript-eslint/eslint-plugin": "^7.0.2",
 		"@typescript-eslint/parser": "^7.0.2",
+		"conventional-changelog-cli": "^4.1.0",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"nodemon": "^3.0.3",

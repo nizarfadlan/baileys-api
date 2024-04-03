@@ -1,11 +1,12 @@
-name: Release
+name: Update Nightly
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
 
-permissions: write-all
+permissions:
+  contents: write
 
 jobs:
   release:
@@ -42,32 +43,39 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
+      - name: Update version to alpha
+        run: yarn version --prerelease --preid=alpha --no-git --no-git-tag-version
+
       - name: Check linting
         run: yarn run lint
 
       - name: Generate Changelog
         id: generate_changelog
         run: |
-          changelog=$(npm run changelog:last --silent)
+          changelog=$(npm run changelog:preview --silent)
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "${changelog}" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Check package version
-        uses: technote-space/package-version-check-action@v1
+      - name: Update Nightly TAG
+        uses: richardsimko/update-tag@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: nightly
 
-      - name: Create Release
+      - name: Update Nightly Release
         uses: meeDamian/github-release@2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref }}
-          name: ${{ github.ref_name }}
+          tag: nightly
+          name: Nightly Release
           body: ${{ steps.generate_changelog.outputs.changelog }}
           draft: false
-          prerelease: false
+          prerelease: true
           files: >
-            baileys-api.tgz
+            baileys-api-nightly.tgz
           gzip: folders
           allow_override: true
