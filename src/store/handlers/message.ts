@@ -9,7 +9,7 @@ import type { BaileysEventHandler, MakeTransformedPrisma } from "@/store/types";
 import { transformPrisma } from "@/store/utils";
 import { prisma } from "@/db";
 import { logger } from "@/shared";
-import type { Message } from "@prisma/client"
+import type { Message } from "@prisma/client";
 
 const getKeyAuthor = (key: WAMessageKey | undefined | null) =>
 	(key?.fromMe ? "me" : key?.participant || key?.remoteJid) || "";
