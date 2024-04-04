@@ -15,14 +15,6 @@ export function transformPrisma<T extends Record<string, any>>(
 			obj[key] = Buffer.from(val);
 		} else if (typeof val === "number" || val instanceof Long) {
 			obj[key] = toNumber(val);
-		} else if (
-				key.includes("Timestamp") && typeof val === "object" && val !== null
-			) {
-			obj[key] = new Long(
-				obj[key].low,
-				obj[key].high,
-				obj[key].unsigned
-			).toString(16);
 		} else if (removeNullable && (typeof val === "undefined" || val === null)) {
 			delete obj[key];
 		}

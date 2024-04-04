@@ -5,10 +5,11 @@ import type {
 	WAMessageKey,
 } from "@whiskeysockets/baileys";
 import { jidNormalizedUser, toNumber } from "@whiskeysockets/baileys";
-import type { BaileysEventHandler } from "@/store/types";
+import type { BaileysEventHandler, MakeTransformedPrisma } from "@/store/types";
 import { transformPrisma } from "@/store/utils";
 import { prisma } from "@/db";
 import { logger } from "@/shared";
+import type { Message } from "@prisma/client"
 
 const getKeyAuthor = (key: WAMessageKey | undefined | null) =>
 	(key?.fromMe ? "me" : key?.participant || key?.remoteJid) || "";
@@ -23,10 +24,10 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 
 				await tx.message.createMany({
 					data: messages.map((message) => ({
-						...transformPrisma(message),
+						...transformPrisma(message) as MakeTransformedPrisma<Message>,
 						remoteJid: message.key.remoteJid!,
 						id: message.key.id!,
-						sessionId,
+						sessionId
 					})),
 				});
 			});
@@ -43,12 +44,17 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 				for (const message of messages) {
 					try {
 						const jid = jidNormalizedUser(message.key.remoteJid!);
-						const data = transformPrisma(message);
+						const data = transformPrisma(message) as MakeTransformedPrisma<Message>;
 						await prisma.message.upsert({
 							select: { pkId: true },
-							create: { ...data, remoteJid: jid, id: message.key.id!, sessionId },
+							create: {
+								...data,
+								remoteJid: jid,
+								id: message.key.id!,
+								sessionId
+							},
 							update: { ...data },
-							where: { sessionId_remoteJid_id: { remoteJid: jid, id: message.key.id!, sessionId } },
+							where: { sessionId_remoteJid_id: { remoteJid: jid, id: message.key.id!, sessionId } }
 						});
 
 						const chatExists = (await prisma.chat.count({ where: { id: jid, sessionId } })) > 0;
@@ -94,7 +100,7 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 					await tx.message.create({
 						select: { pkId: true },
 						data: {
-							...transformPrisma(data),
+							...transformPrisma(data) as MakeTransformedPrisma<Message>,
 							id: data.key.id!,
 							remoteJid: data.key.remoteJid!,
 							sessionId,
