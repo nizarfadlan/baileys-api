@@ -95,7 +95,9 @@ npm run start
 
 ## API Docs
 
-The API documentation import the **Postman Collection File** `(postman_collection.json)` into your Postman App alternatively
+The API Documentation can fork **Postman Collection** in your workspace Postman
+
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/14456337-fb3349c5-de0e-40ec-b909-3922f4a95b7a?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D14456337-fb3349c5-de0e-40ec-b909-3922f4a95b7a%26entityType%3Dcollection%26workspaceId%3Dfbd81f05-e0e1-42cb-b893-60063cf8bcd1)
 
 ## Notes
 
