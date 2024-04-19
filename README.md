@@ -101,7 +101,13 @@ The API Documentation can fork **Postman Collection** in your workspace Postman
 
 ## Notes
 
-- There's no authentication, you may want to implement your own. I don't want to force anyone into using a specific authentication method, choose whatever you love
+- I only provide a simple authentication method, please modify according to your own needs.
+
+## TODO
+
+- [ ] Move ExpressJS to HonoJS
+- [ ] Add endpoint for connecting native mobile API
+- [ ] Add endpoint for Groups (such as create, change information groups, etc)
 
 ## Notice
 

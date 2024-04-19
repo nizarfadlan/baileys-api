@@ -4,3 +4,4 @@ debug/
 prisma/migrations/
 .env
 *.tgz
+*.log

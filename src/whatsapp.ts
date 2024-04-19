@@ -76,6 +76,7 @@ export async function createSession(options: createSessionOptions) {
 				prisma.groupMetadata.deleteMany({ where: { sessionId } }),
 				prisma.session.deleteMany({ where: { sessionId } }),
 			]);
+			logger.info({ session: sessionId }, "Session destroyed");
 		} catch (e) {
 			logger.error(e, "An error occured during session destroy");
 		} finally {

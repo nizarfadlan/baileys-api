@@ -48,7 +48,8 @@ jobs:
       - name: Generate Changelog
         id: generate_changelog
         run: |
-          changelog=$(npm run changelog:last --silent)
+          yarn run changelog:last --silent
+          changelog=$(yarn run changelog:last --silent)
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "${changelog}" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT

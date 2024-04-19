@@ -35,11 +35,17 @@ export async function useSession(sessionId: string): Promise<{
 
 	const read = async (id: string) => {
 		try {
-			const { data } = await model.findUniqueOrThrow({
+			const result = await model.findUnique({
 				select: { data: true },
 				where: { sessionId_id: { id: fixId(id), sessionId } },
 			});
-			return JSON.parse(data, BufferJSON.reviver);
+
+			if (!result) {
+				logger.info({ id }, "Trying to read non existent session data");
+				return null;
+			}
+
+			return JSON.parse(result.data, BufferJSON.reviver);
 		} catch (e) {
 			if (e instanceof PrismaClientKnownRequestError && e.code === "P2025") {
 				logger.info({ id }, "Trying to read non existent session data");
