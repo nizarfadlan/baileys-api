@@ -13,7 +13,7 @@ Project continued from [@ookamiiixd/baileys-api](https://github.com/ookamiiixd/b
 
 ## Installation
 
-1. Download or clone this repo. If you want to skip the build step, you can download the prebuilt one (file with the `baileys-api-VERSION.tgz` name pattern) from the release page
+1. Download or clone this repo. If you want to skip the build step, you can download the release (file with the `baileys-api.tgz` name pattern) from the release page
 2. Enter to the project directory
 3. Install the dependencies
 
@@ -108,11 +108,19 @@ npm run start:prod
 
 ## API Docs
 
-The API documentation import the **Postman Collection File** `(postman_collection.json)` into your Postman App alternatively
+The API Documentation can fork **Postman Collection** in your workspace Postman
+
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/14456337-fb3349c5-de0e-40ec-b909-3922f4a95b7a?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D14456337-fb3349c5-de0e-40ec-b909-3922f4a95b7a%26entityType%3Dcollection%26workspaceId%3Dfbd81f05-e0e1-42cb-b893-60063cf8bcd1)
 
 ## Notes
 
-- There's no authentication, you may want to implement your own. I don't want to force anyone into using a specific authentication method, choose whatever you love
+- I only provide a simple authentication method, please modify according to your own needs.
+
+## TODO
+
+- [ ] Move ExpressJS to HonoJS
+- [ ] Add endpoint for connecting native mobile API
+- [ ] Add endpoint for Groups (such as create, change information groups, etc)
 
 ## Notice
 

@@ -6,3 +6,4 @@ prisma/migrations/
 .env.production
 .env.staging
 *.tgz
+*.log
