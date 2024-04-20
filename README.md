@@ -19,13 +19,12 @@ Project continued from [@ookamiiixd/baileys-api](https://github.com/ookamiiixd/b
 
 ```sh
 npm install
+npm run postinstall
 ```
 
 4. Build the project using the `build` script
 
 ```sh
-npm run generate
-
 # Build staging
 npm run build:staging
 
