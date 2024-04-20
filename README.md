@@ -19,12 +19,12 @@ Project continued from [@ookamiiixd/baileys-api](https://github.com/ookamiiixd/b
 
 ```sh
 npm install
+npm run postinstall
 ```
 
 4. Build the project using the `build` script
 
 ```sh
-npm run generate
 npm run build
 ```
 
@@ -85,9 +85,13 @@ LOG_LEVEL="warn"
 ## Usage
 
 1. Make sure you have completed the **Installation** and **Setup** step
-1. You can then start the app using the `start` script
+1. You can then start the app using the `dev` for development and `start` script for production
 
 ```sh
+# Development
+npm run dev
+
+# Production
 npm run start
 ```
 

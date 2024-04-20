@@ -9,7 +9,7 @@
 		"dev": "nodemon src/index.ts",
 		"lint": "eslint . --ext .ts",
 		"format": "prettier . --write",
-		"generate": "prisma generate",
+		"postinstall": "prisma generate",
 		"changelog:preview": "conventional-changelog -p angular -u",
 		"changelog:last": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
 	},
