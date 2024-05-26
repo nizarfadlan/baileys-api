@@ -19,7 +19,6 @@ Project continued from [@ookamiiixd/baileys-api](https://github.com/ookamiiixd/b
 
 ```sh
 npm install
-npm run postinstall
 ```
 
 4. Build the project using the `build` script
@@ -117,7 +116,7 @@ The API Documentation can fork **Postman Collection** in your workspace Postman
 
 ## TODO
 
-- [ ] Move ExpressJS to HonoJS
+- [X] Move ExpressJS to HonoJS
 - [ ] Add endpoint for connecting native mobile API
 - [ ] Add endpoint for Groups (such as create, change information groups, etc)
 
