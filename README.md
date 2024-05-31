@@ -119,6 +119,10 @@ The API Documentation can fork **Postman Collection** in your workspace Postman
 - [X] Move ExpressJS to HonoJS
 - [ ] Add endpoint for connecting native mobile API
 - [ ] Add endpoint for Groups (such as create, change information groups, etc)
+- [ ] Add endpoint for Community (such as create, add users to community, remove, etc)
+- [ ] Add endpoint for Newsletter (such as create, list, info, link, etc)
+- [ ] Add endpoint for Bussiness (such as get profile, get categories, list catalog, update catalog, etc)
+- [ ] Implement Webhook and add endpoint for Webhook (update by sessionId, subscribe to event..)
 
 ## Notice
 
