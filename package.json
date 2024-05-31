@@ -7,6 +7,7 @@
 		"build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src",
 		"start": "node -r tsconfig-paths/register -r ts-node ./dist/index.js",
 		"dev": "nodemon src/index.ts",
+		"serve":"pm2 start dist/index.js --name baileys-api",
 		"lint": "eslint . --ext .ts",
 		"format": "prettier . --write",
 		"postinstall": "prisma generate",
