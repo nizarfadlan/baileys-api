@@ -3,5 +3,7 @@ dist/
 debug/
 prisma/migrations/
 .env
+.htaccess
+.DS_Store
 *.tgz
 *.log
