@@ -4,6 +4,7 @@ import { transformPrisma } from "@/store/utils";
 import { prisma } from "@/db";
 import { logger } from "@/shared";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { PrismaClient } from "@prisma/client";
 
 export default function contactHandler(sessionId: string, event: BaileysEventEmitter) {
 	let listening = false;
@@ -31,7 +32,8 @@ export default function contactHandler(sessionId: string, event: BaileysEventEmi
 
 			await Promise.any([
 				...upsertPromises,
-				prisma.contact.deleteMany({ where: { id: { in: deletedOldContactIds }, sessionId } }),
+				//danger: contacts come with several patches of N contacts, deleting those that are not in this patch ends up deleting those received in the previous patch
+				//prisma.contact.deleteMany({ where: { id: { in: deletedOldContactIds }, sessionId } }),
 			]);
 			logger.info(
 				{ deletedContacts: deletedOldContactIds.length, newContacts: contacts.length },
@@ -44,22 +46,31 @@ export default function contactHandler(sessionId: string, event: BaileysEventEmi
 
 	const upsert: BaileysEventHandler<"contacts.upsert"> = async (contacts) => {
 		try {
-			await Promise.any(
-				contacts
-					.map((c) => transformPrisma(c))
-					.map((data) =>
-						prisma.contact.upsert({
-							select: { pkId: true },
-							create: { ...data, sessionId },
-							update: data,
-							where: { sessionId_id: { id: data.id, sessionId } },
-						}),
-					),
-			);
-		} catch (e) {
-			logger.error(e, "An error occured during contacts upsert");
+			console.info(`Received ${contacts.length} contacts for upsert.`); // Informative message
+			console.info(contacts[0]); // Informative message
+	
+			if (contacts.length === 0) {
+				return;
+			}
+	
+			const transformedContacts = await Promise.all(
+				contacts.map((contact) => transformPrisma(contact))
+			); 
+			console.log(transformedContacts)
+			await prisma.contact.createMany({
+				data: transformedContacts.map((data) => ({
+					...data,
+					sessionId,
+				})),
+				skipDuplicates: true, // Prevent duplicate inserts
+			});
+			
+		} catch (error) {
+			logger.error("An unexpected error occurred during contacts upsert", error);
 		}
 	};
+	
+	
 
 	const update: BaileysEventHandler<"contacts.update"> = async (updates) => {
 		for (const update of updates) {

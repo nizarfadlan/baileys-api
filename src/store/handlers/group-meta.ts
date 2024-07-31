@@ -81,7 +81,7 @@ export default function groupMetadataHandler(sessionId: string, event: BaileysEv
 					}
 					break;
 				case "remove":
-					metadata.participants = metadata.participants.filter((p) => !participants.includes(p.id));
+					metadata.participants = metadata.participants?.filter((p) => !participants.includes(p.id));
 					break;
 			}
 

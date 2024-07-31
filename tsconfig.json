@@ -11,6 +11,7 @@
 		"lib": ["ESNext"],
 		"outDir": "dist/",
 		"baseUrl": ".",
+		"rootDir": "src",
 		"paths": {
 			"@/*": ["src/*"]
 		}

@@ -27,6 +27,13 @@ export const add: RequestHandler = async (req, res) => {
 	createSession({ sessionId, res, readIncomingMessages, socketConfig });
 };
 
+export const reload: RequestHandler = async (req, res) => {
+	const { sessionId, readIncomingMessages, ...socketConfig } = req.body;
+
+	if (!sessionExists(sessionId)) return res.status(400).json({ error: "Session not exists" });
+	createSession({ sessionId, res, readIncomingMessages, socketConfig });
+};
+
 export const addSSE: RequestHandler = async (req, res) => {
 	const { sessionId } = req.params;
 	res.writeHead(200, {

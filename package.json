@@ -19,7 +19,7 @@
 	"dependencies": {
 		"@hapi/boom": "^10.0.1",
 		"@prisma/client": "^4.16.2",
-		"@whiskeysockets/baileys": "^6.6.0",
+		"@whiskeysockets/baileys": "^6.7.5",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",

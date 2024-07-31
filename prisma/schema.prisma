@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -58,7 +58,7 @@ model Chat {
   lastMessageRecvTimestamp  Int?
   commentsCount             Int?
 
-  @@unique([sessionId, id], map: "unique_id_per_session_id")
+  @@unique([sessionId, id], map: "unique_id_per_session_id_1")
   @@index([sessionId])
 }
 
@@ -72,7 +72,7 @@ model Contact {
   imgUrl       String? @db.VarChar(255)
   status       String? @db.VarChar(128)
 
-  @@unique([sessionId, id], map: "unique_id_per_session_id")
+  @@unique([sessionId, id], map: "unique_id_per_session_id_2")
   @@index([sessionId])
 }
 
@@ -95,7 +95,7 @@ model GroupMetadata {
   ephemeralDuration Int?
   inviteCode        String?  @db.VarChar(255)
 
-  @@unique([sessionId, id], map: "unique_id_per_session_id")
+  @@unique([sessionId, id], map: "unique_id_per_session_id_3")
   @@index([sessionId])
 }
 
@@ -160,6 +160,6 @@ model Session {
   id        String @db.VarChar(255)
   data      String @db.Text
 
-  @@unique([sessionId, id], map: "unique_id_per_session_id")
+  @@unique([sessionId, id], map: "unique_id_per_session_id_4")
   @@index([sessionId])
 }

@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  baileys-db:
+    image: postgres
+    container_name: baileys-db
+    environment:
+      POSTGRES_PASSWORD: 2024pass
+      POSTGRES_DB: bailey
+    ports:
+      - "5432:5432"  # Exportado apenas para demonstração, remova em produção
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: 
+      - wpp-net
+  baileys-api:
+    container_name: baileys-api
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - '.:/app'
+      - /app/node_modules
+      - prisma:/prisma
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:2024pass@baileys-db:5432/bailey
+    depends_on:
+      - baileys-db
+    networks: 
+      - wpp-net
+
+volumes:
+  postgres_data:
+  prisma:
+networks:
+  wpp-net:
+    driver: bridge
