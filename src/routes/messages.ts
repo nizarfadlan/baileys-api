@@ -36,5 +36,23 @@ router.post(
 	sessionValidator,
 	message.download,
 );
+router.delete(
+	"/delete",
+	body("jid").isString().notEmpty(),
+	body("type").isString().isIn(["group", "number"]).optional(),
+	body("message").isObject().notEmpty(),
+	requestValidator,
+	sessionValidator,
+	message.deleteMessage,
+);
+router.delete(
+	"/delete/onlyme",
+	body("jid").isString().notEmpty(),
+	body("type").isString().isIn(["group", "number"]).optional(),
+	body("message").isObject().notEmpty(),
+	requestValidator,
+	sessionValidator,
+	message.deleteMessage,
+);
 
 export default router;

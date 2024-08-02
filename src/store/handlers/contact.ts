@@ -4,7 +4,6 @@ import { transformPrisma } from "@/store/utils";
 import { prisma } from "@/db";
 import { logger } from "@/shared";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { PrismaClient } from "@prisma/client";
 
 export default function contactHandler(sessionId: string, event: BaileysEventEmitter) {
 	let listening = false;
@@ -48,15 +47,15 @@ export default function contactHandler(sessionId: string, event: BaileysEventEmi
 		try {
 			console.info(`Received ${contacts.length} contacts for upsert.`); // Informative message
 			console.info(contacts[0]); // Informative message
-	
+
 			if (contacts.length === 0) {
 				return;
 			}
-	
+
 			const transformedContacts = await Promise.all(
 				contacts.map((contact) => transformPrisma(contact))
-			); 
-			console.log(transformedContacts)
+			);
+			console.log(transformedContacts);
 			await prisma.contact.createMany({
 				data: transformedContacts.map((data) => ({
 					...data,
@@ -64,13 +63,13 @@ export default function contactHandler(sessionId: string, event: BaileysEventEmi
 				})),
 				skipDuplicates: true, // Prevent duplicate inserts
 			});
-			
+
 		} catch (error) {
 			logger.error("An unexpected error occurred during contacts upsert", error);
 		}
 	};
-	
-	
+
+
 
 	const update: BaileysEventHandler<"contacts.update"> = async (updates) => {
 		for (const update of updates) {

@@ -77,23 +77,28 @@ model Contact {
 }
 
 model GroupMetadata {
-  pkId              Int      @id @default(autoincrement())
-  sessionId         String   @db.VarChar(128)
-  id                String   @db.VarChar(128)
-  owner             String?  @db.VarChar(128)
-  subject           String   @db.VarChar(128)
-  subjectOwner      String?  @db.VarChar(128)
-  subjectTime       Int?
-  creation          Int?
-  desc              String?  @db.VarChar(255)
-  descOwner         String?  @db.VarChar(128)
-  descId            String?  @db.VarChar(128)
-  restrict          Boolean?
-  announce          Boolean?
-  size              Int?
-  participants      Json
-  ephemeralDuration Int?
-  inviteCode        String?  @db.VarChar(255)
+  pkId                Int      @id @default(autoincrement())
+  sessionId           String   @db.VarChar(128)
+  id                  String   @db.VarChar(128)
+  owner               String?  @db.VarChar(128)
+  subject             String   @db.VarChar(128)
+  subjectOwner        String?  @db.VarChar(128)
+  subjectTime         Int?
+  creation            Int?
+  desc                String?  @db.VarChar(255)
+  descOwner           String?  @db.VarChar(128)
+  descId              String?  @db.VarChar(128)
+  restrict            Boolean?
+  announce            Boolean?
+  isCommunity         Boolean?
+  isCommunityAnnounce Boolean?
+  joinApprovalMode    Boolean?
+  memberAddMode       Boolean?
+  author              String?  @db.VarChar(128)
+  size                Int?
+  participants        Json
+  ephemeralDuration   Int?
+  inviteCode          String?  @db.VarChar(255)
 
   @@unique([sessionId, id], map: "unique_id_per_session_id_3")
   @@index([sessionId])

@@ -6,25 +6,21 @@ import makeWASocket, {
 import type { ConnectionState, SocketConfig, WASocket, proto } from "@whiskeysockets/baileys";
 import { Store, useSession } from "./store";
 import { prisma } from "./db";
-import type { WebSocket as WebSocketType } from "ws";
-import WebSocket from "ws";
 import { logger } from "./shared";
 import type { Boom } from "@hapi/boom";
 import type { Response } from "express";
 import { toDataURL } from "qrcode";
 import { delay } from "./utils";
 import dotenv from "dotenv";
-
-const channel = new WebSocket.Server({port: 3001})
+import { WAStatus } from "./type";
+import type { WebSocket as WebSocketType } from "ws";
 
 dotenv.config();
-
-type WaStatus = 'unknown' | 'wait_for_qrcode_auth' | 'authenticated' | 'pulling_wa_data' | 'connected' | 'disconected';
 
 type Session = WASocket & {
 	destroy: () => Promise<void>;
 	store: Store;
-	waStatus?: WaStatus
+	waStatus?: WAStatus;
 };
 
 const sessions = new Map<string, Session>();
@@ -43,14 +39,14 @@ export async function init() {
 	for (const { sessionId, data } of sessions) {
 			const { readIncomingMessages, ...socketConfig } = JSON.parse(data);
 			createSession({ sessionId, readIncomingMessages, socketConfig });
-		
+
 	}
 }
 
-export function updateWaStatus(sessionId: string, waStatus: WaStatus){
+export function updateWaStatus(sessionId: string, waStatus: WAStatus){
 	if(sessions.has(sessionId)){
-		const _session = sessions.get(sessionId)!
-		console.warn(waStatus)
+		const _session = sessions.get(sessionId)!;
+		console.warn(waStatus);
 		sessions.set(sessionId, {..._session, waStatus});
 	}
 }
@@ -83,9 +79,9 @@ export async function createSession(options: createSessionOptions) {
 		try {
 			await Promise.all([
 				logout && socket.logout(),
-				// prisma.chat.deleteMany({ where: { sessionId } }),
+				prisma.chat.deleteMany({ where: { sessionId } }),
 				prisma.contact.deleteMany({ where: { sessionId } }),
-					prisma.message.deleteMany({ where: { sessionId } }),
+				prisma.message.deleteMany({ where: { sessionId } }),
 				prisma.groupMetadata.deleteMany({ where: { sessionId } }),
 				prisma.session.deleteMany({ where: { sessionId } }),
 			]);
@@ -102,7 +98,7 @@ export async function createSession(options: createSessionOptions) {
 		const restartRequired = code === DisconnectReason.restartRequired;
 		const doNotReconnect = !shouldReconnect(sessionId);
 
-		updateWaStatus(sessionId, "disconected");
+		updateWaStatus(sessionId, WAStatus.Disconected);
 
 		if (code === DisconnectReason.loggedOut || doNotReconnect) {
 			if (res) {
@@ -124,7 +120,7 @@ export async function createSession(options: createSessionOptions) {
 			if (res && !res.headersSent) {
 				try {
 					const qr = await toDataURL(connectionState.qr);
-					updateWaStatus(sessionId, "wait_for_qrcode_auth");
+					updateWaStatus(sessionId, WAStatus.WaitQrcodeAuth);
 					res.status(200).json({ qr });
 					return;
 				} catch (e) {
@@ -140,7 +136,7 @@ export async function createSession(options: createSessionOptions) {
 		let qr: string | undefined = undefined;
 		if (connectionState.qr?.length) {
 			try {
-				updateWaStatus(sessionId, "wait_for_qrcode_auth")
+				updateWaStatus(sessionId, WAStatus.WaitQrcodeAuth);
 				qr = await toDataURL(connectionState.qr);
 			} catch (e) {
 				logger.error(e, "An error occured during QR generation");
@@ -183,20 +179,20 @@ export async function createSession(options: createSessionOptions) {
 
 	const store = new Store(sessionId, socket.ev);
 
-	sessions.set(sessionId, { ...socket, destroy, store, waStatus: 'unknown' });
+	sessions.set(sessionId, { ...socket, destroy, store, waStatus: WAStatus.Unknown });
 
 	socket.ev.on("creds.update", saveCreds);
-	
 	socket.ev.on("connection.update", (update) => {
 		connectionState = update;
 		const { connection } = update;
 
 		if (connection === "open") {
-			updateWaStatus(sessionId, update.isNewLogin ? "authenticated" : "connected")
+			updateWaStatus(sessionId, update.isNewLogin ? WAStatus.Authenticated : WAStatus.Connected);
 			retries.delete(sessionId);
 			SSEQRGenerations.delete(sessionId);
 		}
 		if (connection === "close") handleConnectionClose();
+		if (connection === "connecting") updateWaStatus(sessionId, WAStatus.PullingWAData);
 		handleConnectionUpdate();
 	});
 
@@ -209,157 +205,6 @@ export async function createSession(options: createSessionOptions) {
 			await socket.readMessages([message.key]);
 		});
 	}
-
-	
-
-	// Debug events
-	// socket.ev.on("messaging-history.set", (data) => dump("messaging-history.set", data));
-	// socket.ev.on("chats.upsert", (data) => dump("chats.upsert", data));
-	// socket.ev.on("contacts.update", (data) => dump("contacts.update", data));
-	// socket.ev.on("groups.upsert", (data) => dump("groups.upsert", data));
-
-	await prisma.session.upsert({
-		create: {
-			id: configID,
-			sessionId,
-			data: JSON.stringify({ readIncomingMessages, ...socketConfig }),
-		},
-		update: {},
-		where: { sessionId_id: { id: configID, sessionId } },
-	});
-}
-export async function reloadDataFromSession(options: createSessionOptions) {
-	const { sessionId, res, SSE = false, readIncomingMessages = false, socketConfig } = options;
-	const configID = `${SESSION_CONFIG_ID}-${sessionId}`;
-	let connectionState: Partial<ConnectionState> = { connection: "close" };
-
-	const destroy = async (logout = true) => {
-		try {
-			await Promise.all([
-				logout && socket.logout(),
-				// prisma.chat.deleteMany({ where: { sessionId } }),
-				prisma.contact.deleteMany({ where: { sessionId } }),
-				// prisma.message.deleteMany({ where: { sessionId } }),
-				prisma.groupMetadata.deleteMany({ where: { sessionId } }),
-				prisma.session.deleteMany({ where: { sessionId } }),
-			]);
-			logger.info({ session: sessionId }, "Session destroyed");
-		} catch (e) {
-			logger.error(e, "An error occured during session destroy");
-		} finally {
-			sessions.delete(sessionId);
-		}
-	};
-
-	const handleConnectionClose = () => {
-		const code = (connectionState.lastDisconnect?.error as Boom)?.output?.statusCode;
-		const restartRequired = code === DisconnectReason.restartRequired;
-		const doNotReconnect = !shouldReconnect(sessionId);
-
-		if (code === DisconnectReason.loggedOut || doNotReconnect) {
-			if (res) {
-				!SSE && !res.headersSent && res.status(500).json({ error: "Unable to create session" });
-				res.end();
-			}
-			destroy(doNotReconnect);
-			return;
-		}
-
-		if (!restartRequired) {
-			logger.info({ attempts: retries.get(sessionId) ?? 1, sessionId }, "Reconnecting...");
-		}
-		setTimeout(() => createSession(options), restartRequired ? 0 : RECONNECT_INTERVAL);
-	};
-
-	const handleNormalConnectionUpdate = async () => {
-		if (connectionState.qr?.length) {
-			if (res && !res.headersSent) {
-				try {
-					const qr = await toDataURL(connectionState.qr);
-					res.status(200).json({ qr });
-					return;
-				} catch (e) {
-					logger.error(e, "An error occured during QR generation");
-					res.status(500).json({ error: "Unable to generate QR" });
-				}
-			}
-			destroy();
-		}
-	};
-
-	const handleSSEConnectionUpdate = async () => {
-		let qr: string | undefined = undefined;
-		if (connectionState.qr?.length) {
-			try {
-				qr = await toDataURL(connectionState.qr);
-			} catch (e) {
-				logger.error(e, "An error occured during QR generation");
-			}
-		}
-
-		const currentGenerations = SSEQRGenerations.get(sessionId) ?? 0;
-		if (!res || res.writableEnded || (qr && currentGenerations >= SSE_MAX_QR_GENERATION)) {
-			res && !res.writableEnded && res.end();
-			destroy();
-			return;
-		}
-
-		const data = { ...connectionState, qr };
-		if (qr) SSEQRGenerations.set(sessionId, currentGenerations + 1);
-		res.write(`data: ${JSON.stringify(data)}\n\n`);
-	};
-
-	const handleConnectionUpdate = SSE ? handleSSEConnectionUpdate : handleNormalConnectionUpdate;
-	const { state, saveCreds } = await useSession(sessionId);
-	const socket = makeWASocket({
-		printQRInTerminal: true,
-		browser: [process.env.NAME_BOT_BROWSER || "Whatsapp Bot", "Chrome", "3.0"],
-		generateHighQualityLinkPreview: true,
-		...socketConfig,
-		auth: {
-			creds: state.creds,
-			keys: makeCacheableSignalKeyStore(state.keys, logger),
-		},
-		version: [2, 2413, 1],
-		logger,
-		shouldIgnoreJid: (jid) => isJidBroadcast(jid),
-		getMessage: async (key) => {
-			const data = await prisma.message.findFirst({
-				where: { remoteJid: key.remoteJid!, id: key.id!, sessionId },
-			});
-			return (data?.message || undefined) as proto.IMessage | undefined;
-		},
-	});
-
-	const store = new Store(sessionId, socket.ev);
-	sessions.set(sessionId, { ...socket, destroy, store });
-
-	socket.ev.on("creds.update", saveCreds);
-	socket.ev.on("connection.update", (update) => {
-		connectionState = update;
-		const { connection } = update;
-		if (connection === "open") {
-			updateWaStatus(sessionId, update.isNewLogin ? 'authenticated' : 'connected');
-
-			retries.delete(sessionId);
-			SSEQRGenerations.delete(sessionId);
-		}
-		if (connection === "close") handleConnectionClose();
-		if (connection === "connecting") updateWaStatus(sessionId, 'pulling_wa_data');
-		handleConnectionUpdate();
-	});
-
-	if (readIncomingMessages) {
-		socket.ev.on("messages.upsert", async (m) => {
-			const message = m.messages[0];
-			if (message.key.fromMe || m.type !== "notify") return;
-
-			await delay(1000);
-			await socket.readMessages([message.key]);
-		});
-	}
-
-	
 
 	// Debug events
 	// socket.ev.on("messaging-history.set", (data) => dump("messaging-history.set", data));
@@ -379,10 +224,10 @@ export async function reloadDataFromSession(options: createSessionOptions) {
 }
 
 export function getSessionStatus(session: Session) {
-	// const state = ["CONNECTING", "CONNECTED", "DISCONNECTING", "DISCONNECTED"];
-	// let status = state[(session.ws as WebSocketType).readyState];
-	// // status = session.user ? "AUTHENTICATED" : status;
-	return session.waStatus;
+	const state = ["CONNECTING", "CONNECTED", "DISCONNECTING", "DISCONNECTED"];
+	let status = state[(session.ws as WebSocketType).readyState];
+	status = session.user ? "AUTHENTICATED" : status;
+	return session.waStatus !== WAStatus.Unknown ? session.waStatus : status.toLowerCase();
 }
 
 export function listSessions() {

@@ -12,14 +12,27 @@ export const list: RequestHandler = async (req, res) => {
 			cursor: cursor ? { pkId: Number(cursor) } : undefined,
 			take: Number(limit),
 			skip: cursor ? 1 : 0,
-			where: { 
+			where: {
 				id: { endsWith: "s.whatsapp.net" },
 				sessionId,
-				name: {
-					contains: String(search),
-					mode: 'insensitive',
-				}
-			 },
+				OR: [
+					{
+						name: {
+							contains: String(search)
+						},
+					},
+					{
+						verifiedName: {
+							contains: String(search)
+						}
+					},
+					{
+						notify: {
+							contains: String(search)
+						}
+					}
+				]
+			},
 		});
 
 		res.status(200).json({

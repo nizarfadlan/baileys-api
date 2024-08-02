@@ -66,16 +66,26 @@ export default function groupMetadataHandler(sessionId: string, event: BaileysEv
 				);
 			}
 
+			if (!metadata.participants) {
+				metadata.participants = [];
+			}
+
 			switch (action) {
 				case "add":
 					metadata.participants.push(
-						participants.map((id) => ({ id, isAdmin: false, isSuperAdmin: false })),
+						...participants.map((id) => ({
+							id,
+							admin: null,
+							isAdmin: false,
+							isSuperAdmin: false,
+						}))
 					);
 					break;
 				case "demote":
 				case "promote":
 					for (const participant of metadata.participants) {
 						if (participants.includes(participant.id)) {
+							participant.admin = action === "promote" ? "admin" : null;
 							participant.isAdmin = action === "promote";
 						}
 					}

@@ -13,13 +13,12 @@ Project continued from [@ookamiiixd/baileys-api](https://github.com/ookamiiixd/b
 
 ## Installation
 
-1. Download or clone this repo. If you want to skip the build step, you can download the release (file with the `baileys-api.tgz` name pattern) from the release page
+1. Download [latest release](https://github.com/nizarfadlan/baileys-api/releases/latest). If you want to skip the build step, you can download the release (file with the `baileys-api.tgz` name pattern) from the release page
 2. Enter to the project directory
 3. Install the dependencies
 
 ```sh
 npm install
-npm run postinstall
 ```
 
 4. Build the project using the `build` script
@@ -33,8 +32,8 @@ You can skip this part if you're using the prebuilt one from the release page
 ## Setup
 
 1. Copy the `.env.example` file and rename it into `.env`, then update your [connection url](https://www.prisma.io/docs/reference/database-reference/connection-urls) in the `DATABASE_URL` field
-1. Update your [provider](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#fields) in the `prisma/schema.prisma` file if you're using database other than MySQL
-1. Run your [migration](https://www.prisma.io/docs/reference/api-reference/command-reference#prisma-migrate)
+2. Update your [provider](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#fields) in the `prisma/schema.prisma` file if you're using database other than MySQL
+3. Run your [migration](https://www.prisma.io/docs/reference/api-reference/command-reference#prisma-migrate)
 
 ```sh
 npx prisma migrate (dev|deploy)
@@ -111,7 +110,8 @@ The API Documentation can fork **Postman Collection** in your workspace Postman
 
 - [ ] Move ExpressJS to HonoJS
 - [ ] Add endpoint for connecting native mobile API
-- [ ] Add endpoint for Groups (such as create, change information groups, etc)
+- [X] Add endpoint for Groups (such as create, change information groups, etc)
+- [ ] Make the response prettier
 
 ## Notice
 
