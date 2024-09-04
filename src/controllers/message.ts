@@ -1,12 +1,12 @@
-import type { proto, WAGenericMediaMessage, WAMessage } from "@whiskeysockets/baileys";
-import { downloadMediaMessage } from "@whiskeysockets/baileys";
-import { serializePrisma } from "@/store";
+import type { proto, WAGenericMediaMessage, WAMessage } from "baileys";
+import { downloadMediaMessage } from "baileys";
+import { serializePrisma, delay as delayMs, logger, emitEvent } from "@/utils";
 import type { RequestHandler } from "express";
-import { logger } from "@/shared";
-import { delay as delayMs } from "@/utils";
-import { getSession, jidExists } from "@/whatsapp";
-import { prisma } from "@/db";
 import type { Message } from "@prisma/client";
+import { prisma } from "@/config/database";
+import WhatsappService from "@/whatsapp/service";
+import { updatePresence } from "./misc";
+import { WAPresence } from "@/types";
 
 export const list: RequestHandler = async (req, res) => {
 	try {
@@ -38,22 +38,33 @@ export const list: RequestHandler = async (req, res) => {
 export const send: RequestHandler = async (req, res) => {
 	try {
 		const { jid, type = "number", message, options } = req.body;
-		const session = getSession(req.params.sessionId)!;
+		const sessionId = req.params.sessionId;
+		const session = WhatsappService.getSession(sessionId)!;
 
-		const exists = await jidExists(session, jid, type);
+		const exists = await WhatsappService.jidExists(session, jid, type);
 		if (!exists) return res.status(400).json({ error: "JID does not exists" });
 
+		await updatePresence(session, WAPresence.Available, jid);
 		const result = await session.sendMessage(jid, message, options);
+		emitEvent("send.message", sessionId, { jid, result });
 		res.status(200).json(result);
 	} catch (e) {
 		const message = "An error occured during message send";
 		logger.error(e, message);
+		emitEvent(
+			"send.message",
+			req.params.sessionId,
+			undefined,
+			"error",
+			message + ": " + e.message,
+		);
 		res.status(500).json({ error: message });
 	}
 };
 
 export const sendBulk: RequestHandler = async (req, res) => {
-	const session = getSession(req.params.sessionId)!;
+	const { sessionId } = req.params;
+	const session = WhatsappService.getSession(sessionId)!;
 	const results: { index: number; result: proto.WebMessageInfo | undefined }[] = [];
 	const errors: { index: number; error: string }[] = [];
 
@@ -62,30 +73,35 @@ export const sendBulk: RequestHandler = async (req, res) => {
 		{ jid, type = "number", delay = 1000, message, options },
 	] of req.body.entries()) {
 		try {
-			const exists = await jidExists(session, jid, type);
+			const exists = await WhatsappService.jidExists(session, jid, type);
 			if (!exists) {
 				errors.push({ index, error: "JID does not exists" });
 				continue;
 			}
 
 			if (index > 0) await delayMs(delay);
+
+			await updatePresence(session, WAPresence.Available, jid);
 			const result = await session.sendMessage(jid, message, options);
 			results.push({ index, result });
+			emitEvent("send.message", sessionId, { jid, result });
 		} catch (e) {
 			const message = "An error occured during message send";
 			logger.error(e, message);
 			errors.push({ index, error: message });
+			emitEvent("send.message", sessionId, undefined, "error", message + ": " + e.message);
 		}
 	}
 
-	res
-		.status(req.body.length !== 0 && errors.length === req.body.length ? 500 : 200)
-		.json({ results, errors });
+	res.status(req.body.length !== 0 && errors.length === req.body.length ? 500 : 200).json({
+		results,
+		errors,
+	});
 };
 
 export const download: RequestHandler = async (req, res) => {
 	try {
-		const session = getSession(req.params.sessionId)!;
+		const session = WhatsappService.getSession(req.params.sessionId)!;
 		const message = req.body as WAMessage;
 		const type = Object.keys(message.message!)[0] as keyof proto.IMessage;
 		const content = message.message![type] as WAGenericMediaMessage;
@@ -127,9 +143,9 @@ export const deleteMessage: RequestHandler = async (req, res) => {
 		 * @returns {object} result
 		 */
 		const { jid, type = "number", message } = req.body;
-		const session = getSession(sessionId)!;
+		const session = WhatsappService.getSession(sessionId)!;
 
-		const exists = await jidExists(session, jid, type);
+		const exists = await WhatsappService.jidExists(session, jid, type);
 		if (!exists) return res.status(400).json({ error: "JID does not exists" });
 
 		const result = await session.sendMessage(jid, { delete: message });
@@ -162,15 +178,12 @@ export const deleteMessageForMe: RequestHandler = async (req, res) => {
 		 * @returns {object} result
 		 */
 		const { jid, type = "number", message } = req.body;
-		const session = getSession(sessionId)!;
+		const session = WhatsappService.getSession(sessionId)!;
 
-		const exists = await jidExists(session, jid, type);
+		const exists = await WhatsappService.jidExists(session, jid, type);
 		if (!exists) return res.status(400).json({ error: "JID does not exists" });
 
-		const result = await session.chatModify(
-			{ clear: { messages: [ message ] } },
-			jid
-		);
+		const result = await session.chatModify({ clear: { messages: [message] } }, jid);
 
 		res.status(200).json(result);
 	} catch (e) {

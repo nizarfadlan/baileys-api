@@ -5,3 +5,4 @@ prisma/migrations/
 .env
 *.tgz
 *.log
+tsconfig.tsbuildinfo

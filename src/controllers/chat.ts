@@ -1,8 +1,8 @@
-import { serializePrisma } from "@/store";
 import type { RequestHandler } from "express";
-import { logger } from "@/shared";
-import { prisma } from "@/db";
+import { logger, serializePrisma } from "@/utils";
 import type { Chat, Message } from "@prisma/client";
+import { prisma } from "@/config/database";
+import { presenceHandler } from "./misc";
 
 export const list: RequestHandler = async (req, res) => {
 	try {
@@ -20,7 +20,9 @@ export const list: RequestHandler = async (req, res) => {
 		res.status(200).json({
 			data: chats,
 			cursor:
-				chats.length !== 0 && chats.length === Number(limit) ? chats[chats.length - 1].pkId : null,
+				chats.length !== 0 && chats.length === Number(limit)
+					? chats[chats.length - 1].pkId
+					: null,
 		});
 	} catch (e) {
 		const message = "An error occured during chat list";
@@ -56,3 +58,5 @@ export const find: RequestHandler = async (req, res) => {
 		res.status(500).json({ error: message });
 	}
 };
+
+export const presence = presenceHandler();

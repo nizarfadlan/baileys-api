@@ -8,8 +8,8 @@ Project continued from [@ookamiiixd/baileys-api](https://github.com/ookamiiixd/b
 
 ## Requirements
 
-- NodeJS version 18.19.0 or higher
-- Prisma [supported databases](https://www.prisma.io/docs/reference/database-reference/supported-databases). Tested on MySQL and PostgreSQL
+-   NodeJS version 18.19.0 or higher (Recommended version 20 and above)
+-   Prisma [supported databases](https://www.prisma.io/docs/reference/database-reference/supported-databases). Tested on MySQL and PostgreSQL
 
 ## Installation
 
@@ -50,23 +50,29 @@ Don't forget to always re-run those whenever there's a change on the `prisma/sch
 ## `.env` Configurations
 
 ```env
-# Listening Host
-HOST="localhost"
-
-# Listening Port
+# Listening Port HTTP and Socket.io
 PORT="3000"
-
-# API Key (for Authorization Header)
-API_KEY="" # Leave it empty if you don't want
-
-# Name browser bot
-NAME_BOT_BROWSER="Whatsapp Bot"
 
 # Project Mode (development|production)
 NODE_ENV="development"
 
+# Global URL Webhook
+URL_WEBHOOK="http://localhost:3000/webhook"
+
+# Enable Webhook
+ENABLE_WEBHOOK="true"
+
+# Enable websocket
+ENABLE_WEBSOCKET="true"
+
+# Name browser bot
+BOT_NAME="Whatsapp Bot"
+
 # Database Connection URL
-DATABASE_URL="mysql://root:12345@localhost:3306/baileys_api"
+DATABASE_URL="mysql://root:@localhost:3306/baileys_api"
+
+# Pino Logger Level
+LOG_LEVEL="debug"
 
 # Reconnect Interval (in Milliseconds)
 RECONNECT_INTERVAL="5000"
@@ -77,8 +83,11 @@ MAX_RECONNECT_RETRIES="5"
 # Maximum SSE QR Generation Attempts
 SSE_MAX_QR_GENERATION="10"
 
-# Pino Logger Level
-LOG_LEVEL="warn"
+# Name session config
+SESSION_CONFIG_ID="session-config"
+
+# API Key (for Authorization Header and Socket.io Token)
+API_KEY="a6bc226axxxxxxxxxxxxxx"
 ```
 
 ## Usage
@@ -104,14 +113,7 @@ The API Documentation can fork **Postman Collection** in your workspace Postman
 
 ## Notes
 
-- I only provide a simple authentication method, please modify according to your own needs.
-
-## TODO
-
-- [ ] Move ExpressJS to HonoJS
-- [ ] Add endpoint for connecting native mobile API
-- [X] Add endpoint for Groups (such as create, change information groups, etc)
-- [ ] Make the response prettier
+-   I only provide a simple authentication method, please modify according to your own needs.
 
 ## Notice
 

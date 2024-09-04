@@ -1,25 +1,53 @@
 {
 	"name": "baileys-api",
-	"version": "1.1.4",
+	"version": "2.0.0",
 	"description": "Simple WhatsApp REST API with multiple device support",
-	"main": "dist/index.js",
+	"main": "dist/main.js",
 	"scripts": {
 		"build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src",
-		"start": "node -r tsconfig-paths/register -r ts-node ./dist/index.js",
-		"dev": "nodemon src/index.ts",
+		"start": "node -r tsconfig-paths/register -r ts-node ./dist/main.js",
+		"dev": "nodemon src/main.ts",
 		"lint": "eslint . --ext .ts",
 		"format": "prettier . --write",
 		"postinstall": "prisma generate",
 		"changelog:preview": "conventional-changelog -p angular -u",
 		"changelog:last": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
 	},
-	"keywords": [],
-	"author": "Nizar",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nizarfadlan/baileys-api.git"
+	},
+	"keywords": [
+		"chat",
+		"communication",
+		"message",
+		"send message",
+		"whatsapp",
+		"js-whatsapp",
+		"whatsapp-api",
+		"whatsapp-web",
+		"whatsapp",
+		"whatsapp-chat",
+		"whatsapp-group",
+		"automation",
+		"multi-device",
+		"bot",
+		"baileys-api"
+	],
+	"author": {
+		"name": "Nizar Izzuddin Yatim Fadlan",
+		"email": "hello@nizarfadlan.dev"
+	},
 	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/nizarfadlan/baileys-api/issues"
+	},
+	"homepage": "https://github.com/nizarfadlan/baileys-api#readme",
 	"dependencies": {
 		"@hapi/boom": "^10.0.1",
 		"@prisma/client": "^4.16.2",
-		"@whiskeysockets/baileys": "^6.7.5",
+		"axios": "^1.7.7",
+		"baileys": "^6.7.7",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
@@ -31,7 +59,9 @@
 		"prisma": "^4.16.2",
 		"qrcode": "^1.5.3",
 		"qrcode-terminal": "^0.12.0",
-		"ws": "^8.16.0"
+		"socket.io": "^4.7.5",
+		"ws": "^8.16.0",
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.17",

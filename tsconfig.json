@@ -1,22 +1,29 @@
 {
 	"compilerOptions": {
-		"target": "ES2017",
+		"target": "ES6",
 		"module": "CommonJS",
 		"moduleResolution": "Node",
-		"strict": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
 		"declaration": false,
-		"skipLibCheck": true,
 		"lib": ["ESNext"],
 		"outDir": "dist/",
 		"baseUrl": ".",
 		"rootDir": "src",
+		"resolveJsonModule": true,
+		"removeComments": true,
+		"noEmitOnError": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": false,
+		"skipLibCheck": true,
+		"strictNullChecks": false,
+		"incremental": true,
+		"noImplicitAny": false,
 		"paths": {
 			"@/*": ["src/*"]
 		}
 	},
-	"include": ["src/**/*.ts"],
+	"include": ["src"],
+	"exclude": ["node_modules", "prisma", "dist"],
 	"ts-node": {
 		"require": ["tsconfig-paths/register"]
 	}

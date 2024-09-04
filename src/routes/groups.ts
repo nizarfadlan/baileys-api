@@ -3,6 +3,7 @@ import { body, query } from "express-validator";
 import { group } from "@/controllers";
 import requestValidator from "@/middlewares/request-validator";
 import sessionValidator from "@/middlewares/session-validator";
+import { WAPresence } from "@/types";
 
 const router = Router({ mergeParams: true });
 router.get(
@@ -13,6 +14,13 @@ router.get(
 	group.list,
 );
 router.get("/:jid", sessionValidator, group.find);
+router.post(
+	"/:jid/presence",
+	body("presence").isString().isIn(Object.values(WAPresence)),
+	requestValidator,
+	sessionValidator,
+	group.presence,
+);
 router.get("/:jid/photo", sessionValidator, group.photo);
 router.post(
 	"/create",
@@ -21,7 +29,7 @@ router.post(
 	body("participants").isArray({ min: 1, max: 1024 }).notEmpty(),
 	requestValidator,
 	sessionValidator,
-	group.create
+	group.create,
 );
 router.put(
 	"/:jid/update/participants",
@@ -29,28 +37,31 @@ router.put(
 	body("action").isString().isIn(["add", "remove", "demote", "promote"]).optional(),
 	requestValidator,
 	sessionValidator,
-	group.updateParticipants
+	group.updateParticipants,
 );
 router.put(
 	"/:jid/update/subject",
 	body("subject").isString().notEmpty(),
 	requestValidator,
 	sessionValidator,
-	group.updateSubject
+	group.updateSubject,
 );
 router.put(
 	"/:jid/update/description",
 	body("description").isString().notEmpty(),
 	requestValidator,
 	sessionValidator,
-	group.updateDescription
+	group.updateDescription,
 );
 router.put(
 	"/:jid/update/setting",
-	body("action").isString().isIn(["announcement", "not_announcement", "unlocked", "locked"]).notEmpty(),
+	body("action")
+		.isString()
+		.isIn(["announcement", "not_announcement", "unlocked", "locked"])
+		.notEmpty(),
 	requestValidator,
 	sessionValidator,
-	group.updateSetting
+	group.updateSetting,
 );
 router.delete("/:jid", sessionValidator, group.leave);
 

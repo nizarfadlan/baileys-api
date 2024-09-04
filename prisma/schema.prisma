@@ -41,7 +41,7 @@ model Chat {
   pHash                     String?  @db.VarChar(128)
   parentGroupId             String?  @db.VarChar(128)
   participant               Json?
-  pinned                    Int?
+  pinned                    BigInt?
   pnJid                     String?  @db.VarChar(128)
   pnhDuplicateLidThread     Boolean?
   readOnly                  Boolean?

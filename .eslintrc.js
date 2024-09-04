@@ -7,7 +7,7 @@ module.exports = {
 	plugins: ["@typescript-eslint"],
 	extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
 	rules: {
-		semi: "error",
+		semi: ["error", "always", { omitLastInOneLineClassBody: true }],
 		quotes: ["error", "double"],
 		"@typescript-eslint/consistent-type-imports": "error",
 		"@typescript-eslint/no-unused-vars": "error",
