@@ -41,12 +41,12 @@ export const send: RequestHandler = async (req, res) => {
 		const sessionId = req.params.sessionId;
 		const session = WhatsappService.getSession(sessionId)!;
 
-		const exists = await WhatsappService.jidExists(session, jid, type);
-		if (!exists) return res.status(400).json({ error: "JID does not exists" });
+		const validJid = await WhatsappService.validJid(session, jid, type);
+		if (!validJid) return res.status(400).json({ error: "JID does not exists" });
 
-		await updatePresence(session, WAPresence.Available, jid);
-		const result = await session.sendMessage(jid, message, options);
-		emitEvent("send.message", sessionId, { jid, result });
+		await updatePresence(session, WAPresence.Available, validJid);
+		const result = await session.sendMessage(validJid, message, options);
+		emitEvent("send.message", sessionId, { jid: validJid, result });
 		res.status(200).json(result);
 	} catch (e) {
 		const message = "An error occured during message send";
