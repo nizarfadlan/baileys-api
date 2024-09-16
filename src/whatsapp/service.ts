@@ -282,18 +282,31 @@ class WhatsappService {
 		return WhatsappService.sessions.has(sessionId);
 	}
 
-	static async jidExists(session: Session, jid: string, type: "group" | "number" = "number") {
+	static async validJid(session: Session, jid: string, type: "group" | "number" = "number") {
 		try {
 			if (type === "number") {
 				const [result] = await session.onWhatsApp(jid);
-				return !!result?.exists;
+				if(result?.exists) {
+					return result.jid;
+				} else {
+					return null;
+				}
 			}
 
 			const groupMeta = await session.groupMetadata(jid);
-			return !!groupMeta.id;
+			if(groupMeta.id) {
+				return groupMeta.id;
+			} else {
+				return null;
+			}
 		} catch (e) {
-			return Promise.reject(e);
+			return null;
 		}
+	}
+
+	static async jidExists(session: Session, jid: string, type: "group" | "number" = "number") {
+		const validJid = await this.validJid(session, jid, type);
+		return !!validJid;
 	}
 }
 
