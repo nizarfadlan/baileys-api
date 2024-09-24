@@ -3,38 +3,43 @@ import { logger } from "@/utils";
 import { makePhotoURLHandler } from "./misc";
 import { prisma } from "@/config/database";
 import WhatsappService from "@/whatsapp/service";
+import { Prisma } from "@prisma/client";
 
 export const list: RequestHandler = async (req, res) => {
 	try {
 		const { sessionId } = req.params;
 		const { cursor = undefined, limit = 25, search } = req.query;
+		// Create whereConditions
+		const whereConditions: Prisma.ContactWhereInput = {
+			id: { endsWith: "s.whatsapp.net" },
+			sessionId,
+		};
+		// Add  OR condition if only search parameter is exist
+		if (search) {
+			whereConditions.OR = [
+				{
+					name: {
+						contains: String(search),
+					},
+				},
+				{
+					verifiedName: {
+						contains: String(search),
+					},
+				},
+				{
+					notify: {
+						contains: String(search),
+					},
+				},
+			];
+		}
 		const contacts = await prisma.contact.findMany({
 			cursor: cursor ? { pkId: Number(cursor) } : undefined,
 			take: Number(limit),
 			skip: cursor ? 1 : 0,
-			where: {
-				id: { endsWith: "s.whatsapp.net" },
-				sessionId,
-				OR: [
-					{
-						name: {
-							contains: String(search),
-						},
-					},
-					{
-						verifiedName: {
-							contains: String(search),
-						},
-					},
-					{
-						notify: {
-							contains: String(search),
-						},
-					},
-				],
-			},
+			where: whereConditions,
 		});
-
 		res.status(200).json({
 			data: contacts,
 			cursor:
@@ -43,7 +48,7 @@ export const list: RequestHandler = async (req, res) => {
 					: null,
 		});
 	} catch (e) {
-		const message = "An error occured during contact list";
+		const message = "An error occurred during contact list";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
 	}
