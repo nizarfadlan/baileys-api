@@ -9,14 +9,12 @@ export const list: RequestHandler = async (req, res) => {
 	try {
 		const { sessionId } = req.params;
 		const { cursor = undefined, limit = 25, search } = req.query;
-
-		// Buat whereConditions
+		// Create whereConditions
 		const whereConditions: Prisma.ContactWhereInput = {
 			id: { endsWith: "s.whatsapp.net" },
 			sessionId,
 		};
-
-		// Tambahkan kondisi OR hanya jika search ada
+		// Add  OR condition if only search parameter is exist
 		if (search) {
 			whereConditions.OR = [
 				{
@@ -36,20 +34,12 @@ export const list: RequestHandler = async (req, res) => {
 				},
 			];
 		}
-
-		console.log("Query Parameters:", { sessionId, cursor, limit, search });
-		console.log("Where Conditions:", whereConditions);
-
 		const contacts = await prisma.contact.findMany({
 			cursor: cursor ? { pkId: Number(cursor) } : undefined,
 			take: Number(limit),
 			skip: cursor ? 1 : 0,
 			where: whereConditions,
 		});
-
-		console.log("Manual query result:", contacts);
-		console.log("Session ID:", sessionId);
-
 		res.status(200).json({
 			data: contacts,
 			cursor:
