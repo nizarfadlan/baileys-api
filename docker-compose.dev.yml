@@ -17,7 +17,7 @@ services:
     container_name: baileys-api
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.dev
+      dockerfile: ./Dockerfile
     volumes:
       - '.:/app'
       - /app/node_modules
