@@ -35,7 +35,7 @@ export default function contactHandler(sessionId: string, event: BaileysEventEmi
 			]);
 			logger.info({ newContacts: contacts.length }, "Synced contacts");
 			emitEvent("contacts.set", sessionId, { contacts: processedContacts });
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during contacts set");
 			emitEvent(
 				"contacts.set",
@@ -67,7 +67,7 @@ export default function contactHandler(sessionId: string, event: BaileysEventEmi
 				skipDuplicates: true, // Prevent duplicate inserts
 			});
 			emitEvent("contacts.upsert", sessionId, { contacts: processedContacts });
-		} catch (error) {
+		} catch (error: any) {
 			logger.error("An unexpected error occurred during contacts upsert", error);
 			emitEvent(
 				"contacts.upsert",
@@ -91,7 +91,7 @@ export default function contactHandler(sessionId: string, event: BaileysEventEmi
 					},
 				});
 				emitEvent("contacts.update", sessionId, { contacts: data });
-			} catch (e) {
+			} catch (e:any) {
 				if (e instanceof PrismaClientKnownRequestError && e.code === "P2025") {
 					return logger.info({ update }, "Got update for non existent contact");
 				}

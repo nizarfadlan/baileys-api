@@ -32,7 +32,7 @@ export const list: RequestHandler = async (req, res) => {
 					? groups[groups.length - 1].pkId
 					: null,
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group list";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -45,7 +45,7 @@ export const find: RequestHandler = async (req, res) => {
 		const session = WhatsappService.getSession(sessionId)!;
 		const data = await session.groupMetadata(jid);
 		res.status(200).json(data);
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group metadata fetch";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -83,7 +83,7 @@ export const create: RequestHandler = async (req, res) => {
 					? `The following numbers do not exist: ${listNumbersNotExists.join(", ")}`
 					: null,
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group creation";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -118,7 +118,7 @@ export const updateParticipants: RequestHandler = async (req, res) => {
 					? `The following numbers do not exist: ${listNumbersNotExists.join(", ")}`
 					: null,
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group participants update";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -139,7 +139,7 @@ export const updateSubject: RequestHandler = async (req, res) => {
 		res.status(200).json({
 			message: "Group subject updated",
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group subject update";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -156,7 +156,7 @@ export const updateSetting: RequestHandler = async (req, res) => {
 		res.status(200).json({
 			message: "Group setting updated",
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group setting update";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -173,7 +173,7 @@ export const updateDescription: RequestHandler = async (req, res) => {
 		res.status(200).json({
 			message: "Group description updated",
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group subject update";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -188,7 +188,7 @@ export const leave: RequestHandler = async (req, res) => {
 		res.status(200).json({
 			message: "Group leaved",
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during group leave";
 		logger.error(e, message);
 		res.status(500).json({ error: message });

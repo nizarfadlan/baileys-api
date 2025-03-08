@@ -15,7 +15,7 @@ export const makePhotoURLHandler =
 
 			const url = await session.profilePictureUrl(jid, "image");
 			res.status(200).json({ url });
-		} catch (e) {
+		} catch (e:any) {
 			const message = "An error occured during photo fetch";
 			logger.error(e, message);
 			res.status(500).json({ error: message });
@@ -45,7 +45,7 @@ export const updatePresence = async (session: Session, presence: WAPresence, jid
 
 		await session.sendPresenceUpdate(presence, jid);
 		return { message: "Presence updated" };
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during presence update";
 		logger.error(e, message);
 		return { code: 500, error: message };

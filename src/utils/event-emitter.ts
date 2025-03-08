@@ -41,7 +41,7 @@ export async function sendWebhook(
 			status,
 			message,
 		});
-	} catch (e) {
+	} catch (e:any) {
 		console.error("Error sending webhook", e);
 	}
 }
