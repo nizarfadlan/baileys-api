@@ -61,7 +61,8 @@
 		"qrcode-terminal": "^0.12.0",
 		"socket.io": "^4.7.5",
 		"ws": "^8.16.0",
-		"zod": "^3.23.8"
+		"zod": "^3.23.8",
+		"sharp": "^0.32.6"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.17",

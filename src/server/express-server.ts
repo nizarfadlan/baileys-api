@@ -14,7 +14,7 @@ export class ExpressServer {
 
 	private setupMiddleware() {
 		this.app.use(cors());
-		this.app.use(express.json());
+		this.app.use(express.json({limit: '100mb'}));
 	}
 
 	private setupRoutes() {
