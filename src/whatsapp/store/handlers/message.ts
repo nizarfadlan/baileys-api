@@ -29,7 +29,7 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 				emitEvent("messages.upsert", sessionId, { messages: processedMessages });
 			});
 			logger.info({ messages: messages.length }, "Synced messages");
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during messages set");
 			emitEvent(
 				"messages.upsert",
@@ -80,7 +80,7 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 								},
 							]);
 						}
-					} catch (e) {
+					} catch (e:any) {
 						logger.error(e, "An error occured during message upsert");
 						emitEvent(
 							"messages.upsert",
@@ -130,7 +130,7 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 					});
 					emitEvent("messages.update", sessionId, { messages: processedMessage });
 				});
-			} catch (e) {
+			} catch (e:any) {
 				logger.error(e, "An error occured during message update");
 				emitEvent(
 					"messages.update",
@@ -156,7 +156,7 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 				where: { id: { in: item.keys.map((k) => k.id!) }, remoteJid: jid, sessionId },
 			});
 			emitEvent("messages.delete", sessionId, { message: item });
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during message delete");
 			emitEvent(
 				"messages.delete",
@@ -209,7 +209,7 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 					});
 					emitEvent("message-receipt.update", sessionId, { message: { key, receipt } });
 				});
-			} catch (e) {
+			} catch (e:any) {
 				logger.error(e, "An error occured during message receipt update");
 				emitEvent(
 					"message-receipt.update",
@@ -256,7 +256,7 @@ export default function messageHandler(sessionId: string, event: BaileysEventEmi
 					});
 					emitEvent("messages.reaction", sessionId, { message: { key, reaction } });
 				});
-			} catch (e) {
+			} catch (e:any) {
 				logger.error(e, "An error occured during message reaction update");
 				emitEvent(
 					"messages.reaction",

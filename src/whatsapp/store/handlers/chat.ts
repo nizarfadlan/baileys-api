@@ -35,7 +35,7 @@ export default function chatHandler(sessionId: string, event: BaileysEventEmitte
 				logger.info({ chatsAdded }, "Synced chats");
 				emitEvent("chats.set", sessionId, { chats: processedChats });
 			});
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during chats set");
 			emitEvent(
 				"chats.set",
@@ -64,7 +64,7 @@ export default function chatHandler(sessionId: string, event: BaileysEventEmitte
 					}),
 			);
 			emitEvent("chats.upsert", sessionId, { chats: results });
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during chats upsert");
 			emitEvent(
 				"chats.upsert",
@@ -104,7 +104,7 @@ export default function chatHandler(sessionId: string, event: BaileysEventEmitte
                where: { sessionId_id: { id: update.id!, sessionId } },
             });
             emitEvent("chats.update", sessionId, { chats: data });
-         } catch (e) {
+         } catch (e:any) {
             if (e instanceof PrismaClientKnownRequestError && e.code === "P2025") {
                return logger.info({ update }, "Got update for non existent chat");
             }
@@ -129,7 +129,7 @@ export default function chatHandler(sessionId: string, event: BaileysEventEmitte
 				where: { id: { in: ids } },
 			});
 			emitEvent("chats.delete", sessionId, { chats: ids });
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during chats delete");
 			emitEvent(
 				"chats.delete",

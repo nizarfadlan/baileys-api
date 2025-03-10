@@ -47,7 +47,7 @@ export const list: RequestHandler = async (req, res) => {
 					? contacts[contacts.length - 1].pkId
 					: null,
 		});
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occurred during contact list";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -59,7 +59,7 @@ export const listBlocked: RequestHandler = async (req, res) => {
 		const session = WhatsappService.getSession(req.params.sessionId)!;
 		const data = await session.fetchBlocklist();
 		res.status(200).json(data);
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during blocklist fetch";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -76,7 +76,7 @@ export const updateBlock: RequestHandler = async (req, res) => {
 
 		await session.updateBlockStatus(jid, action);
 		res.status(200).json({ message: `Contact ${action}ed` });
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during blocklist update";
 		logger.error(e, message);
 		res.status(500).json({ error: message });
@@ -90,7 +90,7 @@ export const check: RequestHandler = async (req, res) => {
 
 		const exists = await WhatsappService.jidExists(session, jid);
 		res.status(200).json({ exists });
-	} catch (e) {
+	} catch (e:any) {
 		const message = "An error occured during jid check";
 		logger.error(e, message);
 		res.status(500).json({ error: message });

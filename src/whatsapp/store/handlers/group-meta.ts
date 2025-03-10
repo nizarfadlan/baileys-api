@@ -26,7 +26,7 @@ export default function groupMetadataHandler(sessionId: string, event: BaileysEv
 					}),
 			);
 			emitEvent("groups.upsert", sessionId, { groups: results });
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during groups upsert");
 			emitEvent(
 				"groups.upsert",
@@ -48,7 +48,7 @@ export default function groupMetadataHandler(sessionId: string, event: BaileysEv
 					where: { sessionId_id: { id: update.id!, sessionId } },
 				});
 				emitEvent("groups.update", sessionId, { groups: data });
-			} catch (e) {
+			} catch (e:any) {
 				if (e instanceof PrismaClientKnownRequestError && e.code === "P2025")
 					return logger.info({ update }, "Got metadata update for non existent group");
 				logger.error(e, "An error occured during group metadata update");
@@ -123,7 +123,7 @@ export default function groupMetadataHandler(sessionId: string, event: BaileysEv
 				action,
 				participants,
 			});
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during group participants update");
 			emitEvent(
 				"group-participants.update",

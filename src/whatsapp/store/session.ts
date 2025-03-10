@@ -24,7 +24,7 @@ export async function useSession(sessionId: string): Promise<{
 				update: { data },
 				where: { sessionId_id: { id, sessionId } },
 			});
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during session write");
 		}
 	};
@@ -42,7 +42,7 @@ export async function useSession(sessionId: string): Promise<{
 			}
 
 			return JSON.parse(result.data, BufferJSON.reviver);
-		} catch (e) {
+		} catch (e:any) {
 			if (e instanceof PrismaClientKnownRequestError && e.code === "P2025") {
 				logger.info({ id }, "Trying to read non existent session data");
 			} else {
@@ -58,7 +58,7 @@ export async function useSession(sessionId: string): Promise<{
 				select: { pkId: true },
 				where: { sessionId_id: { id: fixId(id), sessionId } },
 			});
-		} catch (e) {
+		} catch (e:any) {
 			logger.error(e, "An error occured during session delete");
 		}
 	};
