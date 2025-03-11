@@ -45,6 +45,10 @@ export const send: RequestHandler = async (req, res) => {
 		if (!validJid) return res.status(400).json({ error: "JID does not exists" });
 
 		await updatePresence(session, WAPresence.Available, validJid);
+		if("image" in message) {
+			logger.info(message["image"], "did");
+			message["image"] = Buffer.from(message["image"], "base64");	
+		}
 		const result = await session.sendMessage(validJid, message, options);
 		emitEvent("send.message", sessionId, { jid: validJid, result });
 		res.status(200).json(result);
